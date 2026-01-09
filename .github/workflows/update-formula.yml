@@ -1,0 +1,33 @@
+name: Update Formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g., 1.4.0)'
+        required: true
+        type: string
+  repository_dispatch:
+    types: [release]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tap repository
+        uses: actions/checkout@v4
+
+      - name: Update formula
+        run: |
+          VERSION="${{ github.event.inputs.version || github.event.client_payload.version }}"
+          chmod +x .github/scripts/update-formula.sh
+          .github/scripts/update-formula.sh "$VERSION"
+
+      - name: Commit and push
+        run: |
+          VERSION="${{ github.event.inputs.version || github.event.client_payload.version }}"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add Formula/ghosttown.rb
+          git diff --staged --quiet || git commit -m "Update ghosttown to ${VERSION}"
+          git push
