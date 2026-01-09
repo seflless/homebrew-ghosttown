@@ -2,7 +2,41 @@
 
 This is the Homebrew tap for [ghosttown](https://github.com/seflless/ghosttown), a web-based terminal emulator.
 
-## How This Works
+## Installation Methods
+
+### Method 1: Homebrew (Recommended)
+
+```bash
+brew install seflless/ghosttown/ghosttown
+```
+
+### Method 2: One-liner Script
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/seflless/homebrew-ghosttown/main/install.sh | bash
+```
+
+### Method 3: npm
+
+```bash
+npm install -g @seflless/ghosttown
+```
+
+### Updating
+
+```bash
+# If installed via Homebrew
+brew upgrade ghosttown
+
+# If installed via npm
+ghosttown update
+# or
+npm update -g @seflless/ghosttown
+```
+
+---
+
+## How This Tap Works
 
 This tap is **mostly automated** - you rarely need to touch it directly.
 
@@ -20,16 +54,6 @@ The formula at `Formula/ghosttown.rb`:
 - Installs Node.js as a dependency
 - Runs `npm install` to install ghosttown globally
 - Symlinks the CLI binaries (ghosttown, gt, ght)
-
-### User Installation
-
-```bash
-# Install (auto-taps on first use)
-brew install seflless/ghosttown/ghosttown
-
-# Update to latest
-brew upgrade ghosttown
-```
 
 ## When You Might Need to Touch This Repo
 
