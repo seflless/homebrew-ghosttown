@@ -59,10 +59,67 @@ curl -X POST \
 
 Or use the GitHub Actions UI: Actions → Update Formula → Run workflow → Enter version.
 
-## Future: homebrew-core
+---
 
-When ghosttown is public and has traction, you can submit to homebrew-core for `brew install ghosttown` (without the tap prefix). The formula here serves as a tested starting point.
+## TODO: Get `brew install ghosttown` Working
 
-Resources:
-- [Adding Software to Homebrew](https://docs.brew.sh/Adding-Software-to-Homebrew)
-- [Formula Cookbook](https://docs.brew.sh/Formula-Cookbook)
+Currently users must run `brew install seflless/ghosttown/ghosttown`. To enable the simpler `brew install ghosttown`, we need to submit to homebrew-core.
+
+### Prerequisites
+
+1. **Open source the ghosttown repo** - https://github.com/seflless/ghosttown must be public (homebrew-core requires open source projects)
+
+2. **Build notability** - Homebrew looks for signs the project is actively used:
+   - GitHub stars
+   - npm download counts
+   - Active issues/PRs
+   - Documentation/website
+
+### Submission Process
+
+Once the prerequisites are met:
+
+1. **Fork** [Homebrew/homebrew-core](https://github.com/Homebrew/homebrew-core)
+
+2. **Set up local homebrew-core:**
+   ```bash
+   export HOMEBREW_NO_INSTALL_FROM_API=1
+   brew tap --force homebrew/core
+   ```
+
+3. **Copy the formula** from this repo to homebrew-core:
+   ```bash
+   cp Formula/ghosttown.rb $(brew --repository homebrew/core)/Formula/g/ghosttown.rb
+   ```
+
+4. **Test the formula:**
+   ```bash
+   brew install --build-from-source ghosttown
+   brew test ghosttown
+   brew audit --new ghosttown
+   brew audit --strict ghosttown
+   ```
+
+5. **Create a branch and commit:**
+   ```bash
+   cd $(brew --repository homebrew/core)
+   git checkout -b ghosttown
+   git add Formula/g/ghosttown.rb
+   git commit -m "ghosttown 1.x.x (new formula)"
+   ```
+
+6. **Push to your fork and open a PR** to homebrew-core
+
+### Resources
+
+- [Adding Software to Homebrew](https://docs.brew.sh/Adding-Software-to-Homebrew) - Main submission guide
+- [Formula Cookbook](https://docs.brew.sh/Formula-Cookbook) - Formula writing details  
+- [Acceptable Formulae](https://docs.brew.sh/Acceptable-Formulae) - What Homebrew accepts
+- [CONTRIBUTING.md](https://github.com/Homebrew/homebrew-core/blob/master/CONTRIBUTING.md) - Contribution guidelines
+
+### After Acceptance
+
+Once merged into homebrew-core:
+- Users can run `brew install ghosttown` globally
+- Homebrew's autobump will handle future version updates automatically
+- This tap (`seflless/homebrew-ghosttown`) can remain as a backup or be archived
