@@ -1,8 +1,8 @@
 class Ghosttown < Formula
   desc "Web-based terminal emulator using Ghostty's VT100 parser"
   homepage "https://github.com/coder/ghostty-web"
-  url "https://registry.npmjs.org/@seflless/ghosttown/-/ghosttown-1.4.0.tgz"
-  sha256 "b31a498106f1928b3aaa32c8542a3ad33bf0876d2cc85661d93ef03b60bd50b5"
+  url "https://registry.npmjs.org/@seflless/ghosttown/-/ghosttown-1.9.1.tgz"
+  sha256 "b7cd9539f1ae198b48820ab8aaf44dcacd2c60e33f62997af78e7e680b18c338"
   license "MIT"
 
   depends_on "node"
